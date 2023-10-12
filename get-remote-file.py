@@ -25,8 +25,17 @@ for server_info in server_list:
         # Load the private key for authentication
         private_key = paramiko.RSAKey(filename=private_key_file)
 
+        # sometimes some fool uses a different SSH port try and catch it
+        try:
+            # Attempt to connect on port 22
+            ssh.connect(hostname, username=username, pkey=private_key, port=22)
+        except paramiko.SSHException:
+            # If port 22 fails, attempt to connect on port 2022
+            ssh.connect(hostname, username=username, pkey=private_key, port=2022)
+
+
         # Connect to the server using the private key
-        ssh.connect(hostname, username=username, pkey=private_key)
+        #ssh.connect(hostname, username=username, pkey=private_key)
 
         # Execute the command
         command = "cat /etc/hosts"
