@@ -29,7 +29,7 @@ for server_info in server_list:
         try:
             # Attempt to connect on port 22
             ssh.connect(hostname, username=username, pkey=private_key, port=22)
-        except paramiko.SSHException:
+        except:
             # If port 22 fails, attempt to connect on port 2022
             ssh.connect(hostname, username=username, pkey=private_key, port=2022)
 
